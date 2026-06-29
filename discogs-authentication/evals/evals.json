@@ -1,0 +1,23 @@
+{
+  "skill_name": "discogs-authentication",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm hitting api.discogs.com/marketplace/orders with my consumer key and secret in the Authorization header, but I keep getting a 401. The same key/secret works fine for database search. What's wrong?",
+      "expected_output": "Explains that marketplace orders are a per-user resource: a bare Consumer Key/Secret authenticates the app but not a user, so it cannot read orders. Recommends a User token or the full OAuth 1.0a access token instead.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "We want Discogs sellers to connect their own Discogs accounts to our app so we can manage their inventory on their behalf. Which authentication method should we use, and what are the steps?",
+      "expected_output": "Recommends OAuth 1.0a (acting on behalf of other users) and lists the flow: get consumer key/secret, GET oauth/request_token, redirect to oauth/authorize for the verifier, POST oauth/access_token to get a non-expiring access token+secret to store, then sign requests and test with oauth/identity. Notes the 15-min verifier TTL, PLAINTEXT signature, and unique User-Agent.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Show me how to search the Discogs database for 'Nirvana' using my personal access token — I just want a curl example with the right Authorization header.",
+      "expected_output": "Gives the Discogs Auth header form: curl \"https://api.discogs.com/database/search?q=Nirvana\" -H \"Authorization: Discogs token=...\" (or the token in the query string), over HTTPS.",
+      "files": []
+    }
+  ]
+}
